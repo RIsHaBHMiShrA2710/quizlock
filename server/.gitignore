@@ -1,0 +1,156 @@
+# ========================
+# QuizLock — .gitignore
+# ========================
+
+# ========================
+# Python / FastAPI Backend
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+ENV/
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.staging
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+coverage.xml
+nosetests.xml
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Alembic
+# Keep migrations folder but ignore compiled files
+*.pyc
+
+# SQLite (if ever used locally)
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# ========================
+# Angular / Extension
+# ========================
+
+# Dependencies
+node_modules/
+
+# Build output — never commit this, load unpacked from here
+extension/dist/
+extension/.angular/
+
+# Angular cache
+.angular/
+
+# Environment files
+extension/src/environments/environment.prod.ts
+
+# Package lock (choose one — if using npm, keep package-lock.json)
+# yarn.lock
+# package-lock.json
+
+# ========================
+# IDEs & Editors
+# ========================
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains (PyCharm, WebStorm)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+
+# ========================
+# OS Generated
+# ========================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ========================
+# Secrets & Keys
+# ========================
+*.pem
+*.key
+*.cert
+*.crt
+secrets/
+credentials/
+
+# ========================
+# Misc
+# ========================
+*.bak
+*.tmp
+*.temp
+.cache/
+tmp/
+temp/

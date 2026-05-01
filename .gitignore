@@ -1,0 +1,18 @@
+# Root
+.vscode/
+.idea/
+.DS_Store
+
+# Backend
+server/venv/
+server/__pycache__/
+server/.env
+server/*.db
+server/migrations/versions/*.pyc
+
+# Frontend
+client/node_modules/
+client/dist/
+client/.angular/
+client/.vscode/
+client/src/assets/temp/

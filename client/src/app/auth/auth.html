@@ -1,0 +1,32 @@
+<div class="paper-card">
+    <div class="clip"></div>
+    <div class="content-inner">
+        <h2>{{ isLogin ? '📝 Student Login' : '✏️ Create Account' }}</h2>
+        <p>{{ isLogin ? 'Welcome back! Log in to manage your QuizLock.' : 'Set up your QuizLock account to get started.'
+            }}</p>
+
+        <div class="msg-error" *ngIf="errorMessage">
+            {{ errorMessage }}
+        </div>
+
+        <form (ngSubmit)="onSubmit()">
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" [(ngModel)]="email" placeholder="student@school.edu" required />
+            </div>
+
+            <div>
+                <label>Password</label>
+                <input type="password" name="password" [(ngModel)]="password" placeholder="••••••••" required />
+            </div>
+
+            <div style="margin-top: 1.5rem">
+                <button type="submit">{{ isLogin ? 'Login' : 'Create Account' }}</button>
+            </div>
+        </form>
+
+        <div class="toggle-link" (click)="toggleMode()">
+            {{ isLogin ? 'Need an account? Register here →' : '← Already have an account? Login' }}
+        </div>
+    </div>
+</div>

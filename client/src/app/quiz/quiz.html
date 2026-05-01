@@ -1,0 +1,104 @@
+<!-- Full page overlay with blurred site background -->
+<div class="quiz-fullpage">
+    <!-- Blurred backdrop (try iframe, fallback to gradient) -->
+    <div class="quiz-backdrop">
+        <div class="quiz-backdrop-fallback"></div>
+    </div>
+
+    <div class="paper-card">
+        <div class="clip"></div>
+        <div class="content-inner">
+            <h2>📝 Pop Quiz!</h2>
+
+            <div class="site-badge">
+                🔒 <span>{{ targetSite }}</span>
+            </div>
+
+            <p>Answer {{ totalQuestions }} questions correctly to unlock access for 10 minutes.</p>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar-track" *ngIf="!quizComplete">
+                <div class="progress-bar-fill" [style.width.%]="(questionNumber / totalQuestions) * 100"></div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state" *ngIf="loading">
+                <div class="spinner"></div>
+                <p>{{ loadingMessage }}</p>
+            </div>
+
+            <!-- Error State -->
+            <div class="msg-error" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+
+            <!-- Final Pass/Fail Result -->
+            <div *ngIf="quizComplete" class="result-banner" [ngClass]="{'pass': passed, 'fail': failed}">
+                <h3>{{ passed ? '🎉 Quiz Passed!' : '❌ Quiz Failed' }}</h3>
+                <p [innerHTML]="resultMessage"></p>
+                <p *ngIf="passed" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                    Redirecting you shortly...
+                </p>
+            </div>
+
+            <!-- Active Question -->
+            <div *ngIf="!loading && !errorMessage && !quizComplete && questionData">
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                    Question {{ questionNumber }} of {{ totalQuestions }} &bull;
+                    Score: {{ totalCorrect }}/{{ questionNumber - (showNextButton ? 1 : 0) }}
+                </p>
+
+                <!-- Question text with math support -->
+                <div class="question-text" [innerHTML]="questionData.question"></div>
+
+                <!-- MCQ Options -->
+                <div *ngIf="userInfo?.questionType === 'mcq' && !showNextButton" style="margin: 1.25rem 0;">
+                    <label *ngFor="let option of questionData.options" class="mcq-option"
+                        [class.selected]="selectedOption === option">
+                        <input type="radio" [value]="option" [(ngModel)]="selectedOption" name="mcqOption">
+                        <span [innerHTML]="option"></span>
+                    </label>
+                </div>
+
+                <!-- Subjective Input -->
+                <div *ngIf="userInfo?.questionType === 'open_ended' && !showNextButton" style="margin: 1.25rem 0;">
+                    <label>Your Answer</label>
+                    <textarea [(ngModel)]="subjectiveAnswer" name="subjectiveAnswer" rows="5"
+                        placeholder="Type your answer here..."></textarea>
+                </div>
+
+                <!-- Per-question feedback -->
+                <div *ngIf="questionResult" class="question-feedback" 
+                    [class.correct]="questionResult.startsWith('✅')"
+                    [class.incorrect]="questionResult.startsWith('❌')">
+                    
+                    <div class="feedback-badge" [class.pass]="questionResult.startsWith('✅')">
+                        {{ questionResult.startsWith('✅') ? '✓ Correct' : '✕ Incorrect' }}
+                    </div>
+
+                    <!-- Detailed Explanation -->
+                    <div class="explanation-box">
+                        <div class="explanation-text" *ngIf="userInfo?.questionType === 'mcq'" [innerHTML]="questionData?.explanation"></div>
+                        <div class="explanation-text" *ngIf="userInfo?.questionType === 'open_ended'" [innerHTML]="feedbackDetails"></div>
+                        
+                        <div class="correct-answer-hint" *ngIf="questionResult.startsWith('❌') && userInfo?.questionType === 'mcq'">
+                            Expected Answer: <span [innerHTML]="questionData.correctAnswer"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button *ngIf="!showNextButton"
+                    [disabled]="(!selectedOption && userInfo?.questionType === 'mcq') || (!subjectiveAnswer && userInfo?.questionType === 'open_ended')"
+                    (click)="submitAnswer()">
+                    Submit Answer
+                </button>
+
+                <!-- Next Question Button -->
+                <button *ngIf="showNextButton" (click)="nextQuestion()">
+                    {{ questionNumber >= totalQuestions ? '📊 See Results' : 'Next Question →' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

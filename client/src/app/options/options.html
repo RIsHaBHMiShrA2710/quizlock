@@ -1,0 +1,61 @@
+<div class="paper-card">
+    <div class="clip"></div>
+    <div class="content-inner">
+        <h2>📋 QuizLock Settings</h2>
+        <p>Configure your study profile and which sites to block.</p>
+
+        <div class="msg-success" *ngIf="savedMessage">
+            {{ savedMessage }}
+        </div>
+
+        <form (ngSubmit)="save()">
+            <h3>🎓 Student Profile</h3>
+            <div>
+                <label>Field of Study</label>
+                <input type="text" [(ngModel)]="userInfo.field" name="field"
+                    placeholder="e.g. Computer Science, Physics, Commerce" required />
+            </div>
+
+            <div>
+                <label>Class / Year</label>
+                <input type="text" [(ngModel)]="userInfo.className" name="className"
+                    placeholder="e.g. 12th Grade, 3rd Year B.Tech" required />
+            </div>
+
+            <div>
+                <label>Exam / Competition</label>
+                <input type="text" [(ngModel)]="userInfo.exam" name="exam"
+                    placeholder="e.g. JEE Advanced, Placements, GATE, SAT" required />
+            </div>
+
+            <h3>⚙️ Quiz Preferences</h3>
+            <div>
+                <label>Question Type</label>
+                <select [(ngModel)]="userInfo.questionType" name="questionType">
+                    <option value="mcq">Multiple Choice Questions (Objective)</option>
+                    <option value="open_ended">Open-Ended Questions (Subjective)</option>
+                </select>
+                <small>Choose MCQ for exams like JEE/NEET. Choose Open-Ended for interviews and subjective
+                    papers.</small>
+            </div>
+
+            <div>
+                <label>Groq API Key</label>
+                <input type="password" [(ngModel)]="userInfo.groqApiKey" name="apiKey" placeholder="gsk_..." required />
+                <small>Get your free key at <a href="https://console.groq.com" target="_blank"
+                        style="color: var(--primary)">console.groq.com</a></small>
+            </div>
+
+            <h3>🚫 Blocked Sites</h3>
+            <div>
+                <label>Domains to Block (one per line)</label>
+                <textarea [(ngModel)]="blockedSitesList" name="blockedSites" rows="4"
+                    placeholder="youtube.com&#10;reddit.com&#10;instagram.com"></textarea>
+            </div>
+
+            <div style="margin-top: 1rem">
+                <button type="submit">💾 Save Settings</button>
+            </div>
+        </form>
+    </div>
+</div>
